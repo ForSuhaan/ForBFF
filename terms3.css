@@ -1,0 +1,17 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+@keyframes fadeInDown { /* Renamed from original to be consistent with common naming, implies upwards movement due to transform */
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.animate-fade-in-up {
+    animation: fadeInDown 0.8s ease-out forwards;
+}
