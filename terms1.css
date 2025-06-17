@@ -16,43 +16,9 @@ body {
     animation: slideInRight 0.8s ease-out forwards;
 }
 
-/* New animation for the 'No Way!' button */
-@keyframes floatAway {
-    0% {
-        opacity: 1;
-        transform: translate(0, 0) scale(1);
-    }
-    100% {
-        opacity: 0;
-        /* Moves button randomly off-screen in various directions */
-        transform: translate(calc(var(--random-x) * 100vw), calc(var(--random-y) * 100vh)) scale(0.2) rotate(var(--random-rotate)deg);
-    }
-}
-
-/* Class added by JavaScript to trigger the animation */
-.float-away {
-    position: absolute; /* Allows it to float freely */
-    animation: floatAway 1.5s ease-out forwards;
-    /* Custom properties for random movement */
-    --random-x: calc(var(--x-dir) * (0.5 + random() * 0.5)); /* Random X direction (left/right) */
-    --random-y: calc(var(--y-dir) * (0.5 + random() * 0.5)); /* Random Y direction (up/down) */
-    --random-rotate: calc(var(--rot-dir) * (180 + random() * 180)); /* Random rotation */
-}
-
-/* Helper to generate random numbers for CSS variables */
-/* Note: CSS `random()` function is not standard, this is a conceptual example.
-   For true randomness, JS is better. Here, I'll rely on the randomness provided by the browser behavior.
-   The directions are set to go outward from the center. */
-.float-away {
-    /* These values are a hacky way to get "random" values in CSS
-       They will be effectively fixed unless the page refreshes.
-       For true randomness each time, you'd need JS to set these.
-       For the purpose of this demo, this gives a visual 'float away'. */
-    --x-dir: calc(var(--x-hash) * 2 - 1); /* -1 or 1 */
-    --y-dir: calc(var(--y-hash) * 2 - 1); /* -1 or 1 */
-    --rot-dir: calc(var(--rot-hash) * 2 - 1); /* -1 or 1 */
-    --x-hash: mod(calc(var(--seed) * 12345), 2);
-    --y-hash: mod(calc(var(--seed) * 67890), 2);
-    --rot-hash: mod(calc(var(--seed) * 98765), 2);
-    --seed: 1; /* This seed would ideally be dynamically set by JS on hover for true random per hover */
+/* Styling for the No button to enable its movement */
+#noButton {
+    /* Set a transition for all properties that JavaScript will change, including transform for rotation */
+    transition: all 0.5s ease-out;
+    /* Do NOT set position: absolute here, it's set by JS on interaction */
 }
