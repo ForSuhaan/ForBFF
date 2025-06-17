@@ -9,35 +9,55 @@
     <!-- Link to external CSS file -->
     <link rel="stylesheet" href="terms1.css">
 </head>
-<body class="flex items-center justify-center min-h-screen bg-gradient-to-r from-orange-300 via-red-400 to-pink-500 p-4">
-    <div class="bg-white p-8 rounded-xl shadow-2xl text-center max-w-md w-full animate-slide-in-right">
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-r from-orange-300 via-red-400 to-pink-500 p-4 relative overflow-hidden">
+    <div class="bg-white p-8 rounded-xl shadow-2xl text-center max-w-md w-full animate-slide-in-right z-10">
         <h2 class="text-3xl font-extrabold text-gray-800 mb-6">Term 1:</h2>
         <p class="text-xl text-gray-700 mb-8 leading-relaxed">
             You're not getting too touchy with Aya.
         </p>
-        <div class="flex justify-center space-x-6">
+        <div class="flex justify-start space-x-6 mt-8">
             <a href="terms2.html" class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition duration-300 ease-in-out hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300">
                 Yes, I Agree!
             </a>
-            <button id="noButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition duration-300 ease-in-out hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-300 whitespace-nowrap">
+            <button id="noButton" onmouseover="moveButton()" onclick="moveButton()"
+                    class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition duration-300 ease-in-out hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-300 whitespace-nowrap">
                 No Way!
             </button>
         </div>
     </div>
 
     <script>
-        const noButton = document.getElementById('noButton');
+        function moveButton() {
+            const noButton = document.getElementById('noButton');
 
-        noButton.addEventListener('mouseover', function() {
-            // Add the animation class
-            this.classList.add('float-away');
+            // Get the button's current position and dimensions *before* making it absolute
+            const rect = noButton.getBoundingClientRect();
 
-            // Optionally remove the button from DOM after animation completes
-            // This ensures it doesn't just sit off-screen but truly disappears
-            this.addEventListener('animationend', () => {
-                this.remove();
-            }, { once: true }); // Use { once: true } to remove the listener after it fires
-        });
+            // Set its position to absolute, maintaining its current visual location
+            noButton.style.position = 'absolute';
+            noButton.style.left = `${rect.left}px`;
+            noButton.style.top = `${rect.top}px`;
+            noButton.style.margin = '0'; // Remove any margins that might interfere
+            noButton.style.transform = 'none'; // Remove any centering transform that might be applied by CSS
+
+            setTimeout(() => {
+                const buttonWidth = noButton.offsetWidth;
+                const buttonHeight = noButton.offsetHeight;
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+
+                // Calculate random X and Y positions within the viewport boundaries
+                // Ensure the button does not go outside the screen
+                const newX = Math.random() * (viewportWidth - buttonWidth);
+                const newY = Math.random() * (viewportHeight - buttonHeight);
+
+                const randomRotate = Math.random() * 720 - 360; // Rotate +/- 360 degrees
+
+                noButton.style.left = `${newX}px`;
+                noButton.style.top = `${newY}px`;
+                noButton.style.transform = `rotate(${randomRotate}deg)`;
+            }, 10);
+        }
     </script>
 </body>
 </html>
